@@ -77,18 +77,21 @@ public class FileProcessor
 
     private void OpenSourceFolderInExplorer()
     {
+        var sourceFolderFullPath = Path.GetFullPath(_sourceFolder);
+
         try
         {
             Process.Start(new ProcessStartInfo
             {
                 FileName = "explorer.exe",
-                Arguments = _sourceFolder,
-                UseShellExecute = true
+                Arguments = $"\"{sourceFolderFullPath}\"",
+                UseShellExecute = true,
+                WorkingDirectory = sourceFolderFullPath
             });
         }
         catch
         {
-            Console.WriteLine($"Unable to open Windows Explorer automatically. Please open this folder manually: {_sourceFolder}");
+            Console.WriteLine($"Unable to open Windows Explorer automatically. Please open this folder manually: {sourceFolderFullPath}");
         }
     }
 }
