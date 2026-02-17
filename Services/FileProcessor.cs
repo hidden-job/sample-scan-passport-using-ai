@@ -27,14 +27,14 @@ public class FileProcessor
 
         if (files.Count == 0)
         {
-            Console.WriteLine("Tidak ada file gambar passport di folder sumber.");
+            Console.WriteLine("No passport image files were found in the source folder.");
             return;
         }
 
         foreach (var file in files)
         {
             var fileName = Path.GetFileName(file);
-            Console.WriteLine($"Memproses file: {fileName}");
+            Console.WriteLine($"Processing file: {fileName}");
 
             try
             {
@@ -52,11 +52,11 @@ public class FileProcessor
 
                 File.Move(file, imageTargetPath);
 
-                Console.WriteLine($"Sukses: {fileName}");
+                Console.WriteLine($"Success: {fileName}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Gagal memproses {fileName}: {ex.Message}");
+                Console.WriteLine($"Failed to process {fileName}: {ex.Message}");
             }
         }
     }

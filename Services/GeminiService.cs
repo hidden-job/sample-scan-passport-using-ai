@@ -75,13 +75,13 @@ public class GeminiService
 
         if (!root.TryGetProperty("candidates", out var candidates) || candidates.GetArrayLength() == 0)
         {
-            throw new InvalidOperationException("Gemini response tidak memiliki candidates.");
+            throw new InvalidOperationException("Gemini response does not contain candidates.");
         }
 
         var candidate = candidates[0];
         if (!candidate.TryGetProperty("content", out var content) || !content.TryGetProperty("parts", out var parts))
         {
-            throw new InvalidOperationException("Gemini response tidak memiliki content parts.");
+            throw new InvalidOperationException("Gemini response does not contain content parts.");
         }
 
         var builder = new StringBuilder();
@@ -96,7 +96,7 @@ public class GeminiService
         var text = builder.ToString();
         if (string.IsNullOrWhiteSpace(text))
         {
-            throw new InvalidOperationException("Gemini response text kosong.");
+            throw new InvalidOperationException("Gemini response text is empty.");
         }
 
         return text;
@@ -112,7 +112,7 @@ public class GeminiService
 
         if (firstBrace < 0 || lastBrace < 0 || lastBrace <= firstBrace)
         {
-            throw new InvalidOperationException("Tidak ditemukan JSON valid pada respons AI.");
+            throw new InvalidOperationException("No valid JSON was found in the AI response.");
         }
 
         return cleaned[firstBrace..(lastBrace + 1)].Trim();
@@ -126,7 +126,7 @@ public class GeminiService
         }
         catch (JsonException ex)
         {
-            throw new InvalidOperationException($"JSON hasil ekstraksi tidak valid: {ex.Message}");
+            throw new InvalidOperationException($"Extracted JSON is invalid: {ex.Message}");
         }
     }
 

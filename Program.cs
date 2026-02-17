@@ -1,6 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using sample_scan_passport_using_ai.Services;
 
+Console.WriteLine("=== Passport Scan AI ===");
+Console.WriteLine("Smart, simple, and ready to process your files.");
+
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
@@ -13,7 +16,7 @@ var destinationFolder = configuration["Folder:DestinationFolder"];
 
 if (string.IsNullOrWhiteSpace(apiKey) || string.IsNullOrWhiteSpace(modelName) || string.IsNullOrWhiteSpace(sourceFolder) || string.IsNullOrWhiteSpace(destinationFolder))
 {
-    Console.WriteLine("Konfigurasi tidak lengkap. Periksa appsettings.json.");
+    Console.WriteLine("Configuration is incomplete. Check appsettings.json.");
     return;
 }
 
