@@ -66,5 +66,5 @@ Example:
 
 ## Notes
 
-- If the source folder has no supported image files, the app logs a message and exits.
+- If the source folder has no supported image files, the app opens the source folder in Windows Explorer and waits for you to press Enter after adding images.
 - If Gemini returns invalid or non-JSON text, the app throws an error for that file and continues with the next file.
