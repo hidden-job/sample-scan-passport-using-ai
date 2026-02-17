@@ -2,7 +2,7 @@ namespace sample_scan_passport_using_ai.Services;
 
 public class FileProcessor
 {
-    private static readonly string[] AllowedExtensions = [".jpg", ".jpeg", ".png"];
+    private static readonly string[] AllowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
 
     private readonly GeminiService _geminiService;
     private readonly string _sourceFolder;
