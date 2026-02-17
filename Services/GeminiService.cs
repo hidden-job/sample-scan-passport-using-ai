@@ -22,7 +22,7 @@ public class GeminiService
         var bytes = await File.ReadAllBytesAsync(filePath);
         var base64 = Convert.ToBase64String(bytes);
         var mimeType = GetMimeType(filePath);
-        var prompt = "Extract all common passport fields from this image. Return only valid JSON object with keys: PassportNumber, FullName, Nationality, DateOfBirth, PlaceOfBirth, DateOfIssue, DateOfExpiry, Gender.";
+        var prompt = "Extract all available information from this passport image and return only a valid JSON object with exactly two top-level keys: DesiredResult and RawData. DesiredResult must be an object with keys: PassportNumber, FullName, Nationality, DateOfBirth, PlaceOfBirth, DateOfIssue, DateOfExpiry, Gender. RawData must contain all detectable raw information from the image, including MRZ lines, visible text fragments, document labels, numbers, dates, and any additional fields even if uncertain.";
 
         var payload = new
         {
@@ -122,7 +122,16 @@ public class GeminiService
     {
         try
         {
-            using var _ = JsonDocument.Parse(json);
+            using var doc = JsonDocument.Parse(json);
+            if (!doc.RootElement.TryGetProperty("DesiredResult", out _))
+            {
+                throw new InvalidOperationException("Extracted JSON does not contain the DesiredResult key.");
+            }
+
+            if (!doc.RootElement.TryGetProperty("RawData", out _))
+            {
+                throw new InvalidOperationException("Extracted JSON does not contain the RawData key.");
+            }
         }
         catch (JsonException ex)
         {

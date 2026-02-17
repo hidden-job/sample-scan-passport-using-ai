@@ -6,7 +6,7 @@ A .NET console application that scans passport images from a source folder, send
 
 - Reads `.jpg`, `.jpeg`, and `.png` passport images from a configurable source directory.
 - Sends image + prompt payload to Gemini (`generateContent`).
-- Normalizes model output to a pure JSON object.
+- Normalizes model output to a pure JSON object with two keys: `DesiredResult` and `RawData`.
 - Validates extracted JSON before saving.
 - Writes one JSON file per image and moves processed images to the destination folder.
 - Automatically creates source and destination folders if they do not exist.
@@ -52,7 +52,9 @@ dotnet run
 
 For each supported image in the source folder:
 
-1. The app extracts passport fields as JSON.
+1. The app extracts passport data into a JSON object with:
+   - `DesiredResult` for standardized fields.
+   - `RawData` for all detectable raw content from the image.
 2. It creates a JSON file with the same base filename in the destination folder.
 3. It moves the original image to the destination folder.
 
