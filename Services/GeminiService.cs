@@ -17,12 +17,12 @@ public class GeminiService
         _modelName = modelName;
     }
 
-    public async Task<string> ExtractPassportJsonAsync(string filePath)
+    public async Task<string> ExtractIdentityDocumentJsonAsync(string filePath)
     {
         var bytes = await File.ReadAllBytesAsync(filePath);
         var base64 = Convert.ToBase64String(bytes);
         var mimeType = GetMimeType(filePath);
-        var prompt = "Extract all available information from this passport image and return only a valid JSON object with exactly two top-level keys: DesiredResult and RawData. DesiredResult must be an object with keys: PassportNumber, FullName, Nationality, DateOfBirth, PlaceOfBirth, DateOfIssue, DateOfExpiry, Gender. RawData must contain all detectable raw information from the image, including MRZ lines, visible text fragments, document labels, numbers, dates, and any additional fields even if uncertain.";
+        var prompt = "Analyze this identity document image and detect whether it is a Passport or a NationalIdentityCard. Return only a valid JSON object with exactly two top-level keys: DesiredResult and RawData. DesiredResult must be an object with keys: DocumentType, Passport, NationalIdentityCard. DocumentType must be one of Passport, NationalIdentityCard, or Unknown. Passport must be an object with keys: PassportNumber, FullName, Nationality, DateOfBirth, PlaceOfBirth, DateOfIssue, DateOfExpiry, Gender. NationalIdentityCard must be an object with keys: IdentityNumber, FullName, PlaceOfBirth, DateOfBirth, Gender, Address, Nationality, MaritalStatus, Occupation, ValidUntil. Use null for missing values. RawData must contain all detectable raw information from the image, including MRZ lines, visible text fragments, document labels, numbers, dates, and any additional fields even if uncertain.";
 
         var payload = new
         {

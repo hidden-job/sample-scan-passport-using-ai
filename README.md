@@ -1,10 +1,10 @@
-# Sample Scan Passport Using AI
+# Sample Scan Identity Document Using AI
 
-A .NET console application that scans passport images from a source folder, sends each image to Google Gemini for field extraction, and stores structured JSON results in a destination folder.
+A .NET console application that scans passport or national identity card images from a source folder, sends each image to Google Gemini for field extraction, and stores structured JSON results in a destination folder.
 
 ## Features
 
-- Reads `.jpg`, `.jpeg`, and `.png` passport images from a configurable source directory.
+- Reads `.jpg`, `.jpeg`, and `.png` passport or national identity card images from a configurable source directory.
 - Sends image + prompt payload to Gemini (`generateContent`).
 - Normalizes model output to a pure JSON object with two keys: `DesiredResult` and `RawData`.
 - Validates extracted JSON before saving.
@@ -16,7 +16,7 @@ A .NET console application that scans passport images from a source folder, send
 - `Program.cs` — app startup and configuration loading.
 - `Services/GeminiService.cs` — Gemini API integration and response normalization.
 - `Services/FileProcessor.cs` — file discovery, processing flow, and output handling.
-- `Models/PassportResult.cs` — passport field model.
+- `Models/PassportResult.cs` — legacy passport field model example.
 - `appsettings.json` — API and folder configuration.
 
 ## Requirements
@@ -35,8 +35,8 @@ Edit `appsettings.json`:
     "ModelName": "gemini-2.5-flash"
   },
   "Folder": {
-    "SourceFolder": "temp/passport-source",
-    "DestinationFolder": "temp/passport-processed"
+    "SourceFolder": "temp/identity-source",
+    "DestinationFolder": "temp/identity-processed"
   }
 }
 ```
@@ -52,7 +52,7 @@ dotnet run
 
 For each supported image in the source folder:
 
-1. The app extracts passport data into a JSON object with:
+1. The app extracts identity document data into a JSON object with:
    - `DesiredResult` for standardized fields.
    - `RawData` for all detectable raw content from the image.
 2. It creates a JSON file with the same base filename in the destination folder.
@@ -60,9 +60,9 @@ For each supported image in the source folder:
 
 Example:
 
-- Input image: `passport_01.jpg`
-- Output JSON: `passport_01.json`
-- Moved image: `passport_01.jpg` (inside destination folder)
+- Input image: `identity_01.jpg`
+- Output JSON: `identity_01.json`
+- Moved image: `identity_01.jpg` (inside destination folder)
 
 ## Notes
 
