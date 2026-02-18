@@ -22,7 +22,7 @@ public class FileProcessor
         Directory.CreateDirectory(_sourceFolder);
         Directory.CreateDirectory(_destinationFolder);
 
-        var files = await WaitForPassportImagesAsync();
+        var files = await WaitForIdentityDocumentImagesAsync();
 
         foreach (var file in files)
         {
@@ -31,7 +31,7 @@ public class FileProcessor
 
             try
             {
-                var extractedJson = await _geminiService.ExtractPassportJsonAsync(file);
+                var extractedJson = await _geminiService.ExtractIdentityDocumentJsonAsync(file);
                 var jsonFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.json";
                 var jsonTargetPath = Path.Combine(_destinationFolder, jsonFileName);
 
@@ -54,7 +54,7 @@ public class FileProcessor
         }
     }
 
-    private async Task<List<string>> WaitForPassportImagesAsync()
+    private async Task<List<string>> WaitForIdentityDocumentImagesAsync()
     {
         while (true)
         {
@@ -68,9 +68,9 @@ public class FileProcessor
                 return files;
             }
 
-            Console.WriteLine("No passport image files were found in the source folder.");
+            Console.WriteLine("No passport or national identity card image files were found in the source folder.");
             OpenSourceFolderInExplorer();
-            Console.WriteLine("Please put passport images in the source folder, then press Enter to continue...");
+            Console.WriteLine("Please put passport or national identity card images in the source folder, then press Enter to continue...");
             await Task.Run(Console.ReadLine);
         }
     }
