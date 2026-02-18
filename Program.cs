@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using sample_scan_passport_using_ai.Services;
 
-Console.WriteLine("=== Passport Scan AI ===");
+Console.WriteLine("=== Identity Document Scan AI ===");
 Console.WriteLine("Smart, simple, and ready to process your files.");
 
 var configuration = new ConfigurationBuilder()
